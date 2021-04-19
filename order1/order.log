@@ -194,3 +194,44 @@
 2021-04-18 16:19:43,492 Starting new HTTP connection (1): 54.234.162.97:8011 Thread-9
 2021-04-18 16:20:37,834 Recieved a buy request of the item 1 Thread-8
 2021-04-18 16:20:37,838 Starting new HTTP connection (1): 54.234.162.97:8011 Thread-8
+2021-04-18 23:55:51,514 Recieved a buy request of the item 5 Thread-7
+2021-04-18 23:55:51,520 Starting new HTTP connection (1): 127.0.0.1:8011 Thread-7
+2021-04-18 23:55:51,523 http://127.0.0.1:8011 "GET /item/5 HTTP/1.1" 200 243 Thread-7
+2021-04-18 23:55:51,524 Item with id 5 present in the catalog server. Going ahead to buy it Thread-7
+2021-04-18 23:55:51,525 Starting new HTTP connection (1): 127.0.0.1:8011 Thread-7
+2021-04-18 23:55:51,810 http://127.0.0.1:8011 "PUT /item/5 HTTP/1.1" 201 86 Thread-7
+2021-04-18 23:55:51,810 Successfully bought the item 5 from the catalog server. Thread-7
+2021-04-18 23:55:51,930 Propagating update to order database Thread-7
+2021-04-18 23:55:51,932 Starting new HTTP connection (1): 127.0.0.1:8022 Thread-7
+2021-04-18 23:55:51,935 http://127.0.0.1:8022 "PUT / HTTP/1.1" 405 178 Thread-7
+2021-04-19 00:15:35,242  * Detected change in 'D:\\Education\\Umass\\CS589\\Anaconda\\Lib\\site-packages\\flask_caching\\__pycache__\\__init__.cpython-38.pyc', reloading Thread-3
+2021-04-19 00:19:19,295 Recieved a buy request of the item 5 Thread-8
+2021-04-19 00:19:19,318 Starting new HTTP connection (1): 127.0.0.1:8011 Thread-8
+2021-04-19 00:19:19,334 http://127.0.0.1:8011 "GET /item/5 HTTP/1.1" 200 243 Thread-8
+2021-04-19 00:19:19,335 Item with id 5 present in the catalog server. Going ahead to buy it Thread-8
+2021-04-19 00:19:19,337 Starting new HTTP connection (1): 127.0.0.1:8011 Thread-8
+2021-04-19 00:19:19,601 http://127.0.0.1:8011 "PUT /item/5 HTTP/1.1" 201 86 Thread-8
+2021-04-19 00:19:19,602 Successfully bought the item 5 from the catalog server. Thread-8
+2021-04-19 00:19:19,703 Propagating update to order database Thread-8
+2021-04-19 00:19:19,706 Starting new HTTP connection (1): 127.0.0.1:8022 Thread-8
+2021-04-19 00:19:19,709 http://127.0.0.1:8022 "PUT / HTTP/1.1" 405 178 Thread-8
+2021-04-19 00:24:05,120 Recieved a buy request of the item 5 Thread-10
+2021-04-19 00:24:05,126 Starting new HTTP connection (1): 127.0.0.1:8011 Thread-10
+2021-04-19 00:24:05,130 http://127.0.0.1:8011 "GET /item/5 HTTP/1.1" 200 243 Thread-10
+2021-04-19 00:24:05,130 Item with id 5 present in the catalog server. Going ahead to buy it Thread-10
+2021-04-19 00:24:05,132 Starting new HTTP connection (1): 127.0.0.1:8011 Thread-10
+2021-04-19 00:24:05,422 http://127.0.0.1:8011 "PUT /item/5 HTTP/1.1" 201 86 Thread-10
+2021-04-19 00:24:05,423 Successfully bought the item 5 from the catalog server. Thread-10
+2021-04-19 00:24:05,524 Propagating update to order database Thread-10
+2021-04-19 00:24:05,526 Starting new HTTP connection (1): 127.0.0.1:8022 Thread-10
+2021-04-19 00:24:05,528 http://127.0.0.1:8022 "PUT / HTTP/1.1" 405 178 Thread-10
+2021-04-19 00:24:23,978 Recieved a buy request of the item 5 Thread-11
+2021-04-19 00:24:23,999 Starting new HTTP connection (1): 127.0.0.1:8011 Thread-11
+2021-04-19 00:24:24,006 http://127.0.0.1:8011 "GET /item/5 HTTP/1.1" 200 244 Thread-11
+2021-04-19 00:24:24,007 Item with id 5 present in the catalog server. Going ahead to buy it Thread-11
+2021-04-19 00:24:24,009 Starting new HTTP connection (1): 127.0.0.1:8011 Thread-11
+2021-04-19 00:24:24,277 http://127.0.0.1:8011 "PUT /item/5 HTTP/1.1" 201 86 Thread-11
+2021-04-19 00:24:24,278 Successfully bought the item 5 from the catalog server. Thread-11
+2021-04-19 00:24:24,392 Propagating update to order database Thread-11
+2021-04-19 00:24:24,399 Starting new HTTP connection (1): 127.0.0.1:8022 Thread-11
+2021-04-19 00:24:24,406 http://127.0.0.1:8022 "PUT / HTTP/1.1" 405 178 Thread-11

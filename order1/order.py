@@ -6,11 +6,14 @@ import requests
 from datetime import datetime
 import sys
 sys.path.insert(1, '../')
-from const import CATALOG_SERVER
+from const import CATALOG_SERVER_1, ORDER_SERVER_2, ORDER_SERVER_1, CATALOG_SERVER_2
 import logging
 logging.basicConfig(filename="order.log", level=logging.DEBUG, format='%(asctime)s %(message)s %(threadName)s')
 
-catalog_url = CATALOG_SERVER['IP'] + ":" + str(CATALOG_SERVER['PORT'])
+# order 1 contacts catalog 1
+
+catalog_url = CATALOG_SERVER_1['IP'] + ":" + str(CATALOG_SERVER_1['PORT'])
+order_url= ORDER_SERVER_2['IP'] + ":" + str(ORDER_SERVER_2['PORT'])
 
 app = Flask(__name__)
 # app.config.from_object(Config)
@@ -60,7 +63,11 @@ def buy(item_id = None):
             return get_failed_response(message = "Failed to update catalog server.")
 
         app.logger.info("Successfully bought the item %s from the catalog server." % (item_id))
+        #propagating update
         order_id = order_db.add_order({'item_id': item_id, 'created':  str(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))})
+        payload_order={"update":{'item_id': item_id, 'created':  str(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))}}
+        app.logger.info("Propagating update to order database")
+        r = requests.put(order_url, data = json.dumps(payload_order))
         return get_success_response("order", output = {'id': order_id}, message = "Item with id %s bought successfully." % (item_id))
     else:
         app.logger.info("The item with id %s is no longer present in the catalog server. Restocking the catalog server" % (item_id))
@@ -70,3 +77,14 @@ def buy(item_id = None):
             app.logger.error("Error: %s" % (str(r.json())))
             return get_failed_response(message = "Failed to update catalog server.")
         return get_failed_response(message = "The item with id %s is no longer present in the catalog server" % (item_id), status_code = 404)
+
+
+@app.route('/update', methods = ['PUT'])
+def add_to_order():
+    order_db = order()
+    data = json.loads(request.data)
+    order_update=data["update"]
+    order_id = order_db.add_order(order_update)
+    app.logger.info("Propagated update to database")
+    return get_success_response("succesfully updated order id %s" %(order_id))
+

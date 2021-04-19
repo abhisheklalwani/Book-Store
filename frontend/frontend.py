@@ -7,6 +7,7 @@ from response_util import get_failed_response,get_success_response
 import sys
 from flask_caching import Cache
 sys.path.insert(1, '../')
+# from const import CATALOG_SERVER_1, ORDER_SERVER_2, ORDER_SERVER_1, CATALOG_SERVER_2
 import logging
 
 logging.basicConfig(filename="frontend.log", level=logging.DEBUG, format='%(asctime)s %(message)s', filemode='w')
@@ -27,12 +28,14 @@ cache = Cache(app)
 
 CATALOG_SERVER_1 = {"type": "catalog", "IP": "http://localhost", "PORT": 8011}
 ORDER_SERVER_1 = {"type": "order", "IP": "http://localhost", "PORT": 8012}
-CATALOG_SERVER_2 = {"type": "catalog", "IP": "http://localhost", "PORT": 8013}
-ORDER_SERVER_2 = {"type": "order", "IP": "http://localhost", "PORT": 8014}
+CATALOG_SERVER_2 = {"type": "catalog", "IP": "http://localhost", "PORT": 8021}
+ORDER_SERVER_2 = {"type": "order", "IP": "http://localhost", "PORT": 8022}
 
 # defining the default page
 @app.route('/', methods=['GET'])
 def hello_world():
+    session['load_balancer_catalog'] = 0
+    session['load_balancer_order'] = 0
     return "Welcome to Book Store!"
 
 # the buy method which makes calls to the order server to buy an item based on provided item id
