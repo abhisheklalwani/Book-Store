@@ -31,11 +31,12 @@ ORDER_SERVER_1 = {"type": "order", "IP": "http://localhost", "PORT": 8012}
 CATALOG_SERVER_2 = {"type": "catalog", "IP": "http://localhost", "PORT": 8021}
 ORDER_SERVER_2 = {"type": "order", "IP": "http://localhost", "PORT": 8022}
 
+def cache_key():
+    return request.args
+
 # defining the default page
 @app.route('/', methods=['GET'])
 def hello_world():
-    session['load_balancer_catalog'] = 0
-    session['load_balancer_order'] = 0
     return "Welcome to Book Store!"
 
 # the buy method which makes calls to the order server to buy an item based on provided item id
@@ -45,7 +46,7 @@ def buy():
         data = request.args
         id=data["id"]
         app.logger.info("Buy method called with the item with id '%s' in catalog server." % (id))
-        if session['load_balancer_order'] == 0:
+        if session.get('load_balancer_order') != None and session['load_balancer_order'] == 0:
             session['load_balancer_order'] = 1
             results=requests.get("%s:%s/buy/%s"%(ORDER_SERVER_1["IP"],ORDER_SERVER_1["PORT"],id))
             results=results.json()
@@ -63,7 +64,7 @@ def buy():
 
 #the search method makes calls to the catalog server and searches for items based on topic name 
 @app.route('/search',methods=['GET'])
-@cache.cached(key_prefix='topic_lookup')
+@cache.cached(key_prefix = cache_key)
 def search():
     try:
         if 'topic' in request.args:
@@ -71,7 +72,7 @@ def search():
         else:
             return "Error: No topic field provided. Please specify a topic."
         app.logger.info("Search method called with the topic name '%s' in catalog server." % (topic))
-        if session['load_balancer_catalog'] == 0:
+        if session.get('load_balancer_catalog') != None and session['load_balancer_catalog'] == 0:
             session['load_balancer_catalog'] = 1
             results=requests.get("%s:%s/item?topic=%s"%(CATALOG_SERVER_1["IP"],CATALOG_SERVER_1["PORT"],topic))
             app.logger.info("Searching of items with topic '%s' successful."%(topic))
@@ -88,7 +89,7 @@ def search():
 
 # the lookup method makes calls to the catalog server and searches for the item corresponding to item id
 @app.route('/lookup',methods=['GET'])
-@cache.cached(key_prefix='id_lookup')
+@cache.cached(key_prefix = cache_key)
 def lookup():
     try:
         if 'id' in request.args:
@@ -96,7 +97,7 @@ def lookup():
         else:
             return "Error: No id field provided. Please specify an id."
         app.logger.info("Lookup method called with the id '%s' in catalog server." % (id))
-        if session['load_balancer_catalog'] == 0:
+        if session.get('load_balancer_catalog') != None and session['load_balancer_catalog'] == 0:
             session['load_balancer_catalog'] = 1
             results=requests.get("%s:%s/item/%s"%(CATALOG_SERVER_1["IP"],CATALOG_SERVER_1["PORT"],id))
             results=results.json()
